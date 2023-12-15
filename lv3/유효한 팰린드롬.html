@@ -12,15 +12,10 @@
         const n = s.length - 1;
 
         for (let i = 0; i <= Math.floor(n / 2); i++) {
-          if (s[i] === s[n - i].split("").reverse().join("")) {
-            answer = "YES";
-          } else {
-            answer = "NO";
-          }
+          answer = s[i] === s[n - i].split("").reverse().join("") ? "YES" : "NO"
         }
         return answer;
       }
-
       let str = "found7, time: study; Yduts; emit, 7Dnuof";
       console.log(solution(str));
     </script>
