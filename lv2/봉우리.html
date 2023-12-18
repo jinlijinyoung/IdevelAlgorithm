@@ -7,16 +7,36 @@
     <script>
       function solution(arr) {
         let answer = 0;
-        let n = arr.length;
-        let dx = [-1, 0, 1, 0];
-        let dy = [0, 1, 0, -1];
-        for (let i = 0; i < arr.length; i++) {
-          for (let j = 0; j < dx.length; j++) {
-            if (arr[i][j] > arr[i + dx[j]][j + dy[j]]) {
+        const n = arr.length;
+        const dx = [-1, 0, 1, 0];
+        const dy = [0, 1, 0, -1];
+
+        for (let i = 0; i < n; i++) {
+          for (let j = 0; j < n; j++) {
+            let isMax = true;
+
+            for (let k = 0; k < 4; k++) {
+              const ni = i + dx[k];
+              const nj = j + dy[k];
+
+              if (
+                ni >= 0 &&
+                ni < n &&
+                nj >= 0 &&
+                nj < n &&
+                arr[i][j] <= arr[ni][nj]
+              ) {
+                isMax = false;
+                break;
+              }
+            }
+
+            if (isMax) {
               answer++;
             }
           }
         }
+
         return answer;
       }
 
