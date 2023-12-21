@@ -1,11 +1,12 @@
 <script>
   function solution(arr) {
     let answer = [];
+    //뒤집기
     const reverse = (x) => {
       revInt = String(x).split("").reverse().join("");
       return parseInt(revInt);
     };
-
+    //소수판별하기
     const isPrime = (y) => {
       if (y === 1) return false;
       for (let i = 2; i <= parseInt(Math.sqrt(y)); i++) {
@@ -13,6 +14,7 @@
       }
       return true;
     };
+    //필터링
     answer = arr.filter((i) => isPrime(reverse(i))).map((i) => reverse(i));
     return answer;
   }
