@@ -1,16 +1,22 @@
 <script>
   function solution(n, arr) {
     let answer,
-      max = Number.MIN_SAFE_INTEGER,
-      sum = 0;
-    for (let i = 0; i < n; i++) {
-      while (arr[i] > 0) {
-        sum += Math.floor(arr[i] % 10);
-        arr[i] /= 10;
-        answer = Math.max(sum, max);
+      max = Number.MIN_SAFE_INTEGER;
+    const newArr = arr.sort((a, b) => b - a); //내림차순 => 동시에 답이 될 경우 큰 수 출력하도록 함
+    for (let x of newArr) {
+      let sum = 0,
+        tmp = x;
+      while (tmp) {
+        //각 자릿수의 합 구함
+        sum += tmp % 10;
+        tmp = Math.floor(tmp / 10);
+      }
+      //주어진 최댓값보댜 클 경우, 최댓값을 sum으로 다시 지정한 후, answer 반환
+      if (sum > max) {
+        max = sum;
+        answer = x;
       }
     }
-
     return answer;
   }
 
