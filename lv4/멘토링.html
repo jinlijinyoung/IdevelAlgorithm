@@ -1,15 +1,51 @@
 <script>
-  function solution(test){
-        let answer = 0,
-        m=test.length;
-        n=test[0].length;
-        total = (m * (m-1)) / 2
-        for(let i=0; i<m; i++){
-            for(let j=0; j<m)
-        }
-
-        return answer;
+  function solution(test) {
+    let answer;
+    m = test.length;
+    n = test[0].length;
+    arr = [];
+    testReverse = [];
+    //첫번째 배열 제외하고 reverse
+    for (let j = 1; j < m; j++) {
+      testReverse.push([...test[j]].reverse());
     }
+    test = [test[0], ...testReverse];
+    //조합계산
+    const combination = (arr, selectNumber) => {
+      const results = [];
+      if (selectNumber === 1) return arr.map((value) => [value]);
+
+      arr.forEach((fixed, index, origin) => {
+        const rest = origin.slice(index + 1);
+        const combinations = combination(rest, selectNumber - 1);
+        const attached = combinations.map((combination) => [
+          fixed,
+          ...combination,
+        ]);
+        results.push(...attached);
+      });
+
+      return results;
+    };
+    for (let i = 0; i < m; i++) {
+      arr.push(combination(test[i], 2));
+    }
+    answer = arr[0];
+    // 첫 번째 배열 기준으로 다른 배열에서 같은 값이 존재하면 제거
+    for (let i = 1; i < arr.length; i++) {
+      const currentArray = arr[i];
+      for (const elem of currentArray) {
+        const index = answer.findIndex(
+          (e) => JSON.stringify(e) === JSON.stringify(elem)
+        );
+        if (index !== -1) {
+          answer.splice(index, 1);
+        }
+      }
+    }
+    return answer.length;
+  }
+
   let arr = [
     [3, 4, 1, 2],
     [4, 3, 2, 1],
